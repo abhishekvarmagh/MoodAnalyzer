@@ -1,14 +1,14 @@
-package com.Exception;
+package com.moodAnalyzer;
 
 import com.CustomException.MoodAnalysisException;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class MoodAnalyzerTest {
 
     private String mood;
 
+    //Given a Message to analyse and respond Sad Mood
     @Test
     public void givenMood_WhenSad_ShouldReturnSad() {
         try {
@@ -20,6 +20,7 @@ public class MoodAnalyzerTest {
         }
     }
 
+    //Given a Message to analyse and respond Happy Mood
     @Test
     public void givenMood_WhenAny_ShouldReturnHappy() {
         try {
@@ -32,6 +33,7 @@ public class MoodAnalyzerTest {
 
     }
 
+    //Handle Exception if User Provides Invalid Mood Like Null
     @Test
     public void givenMood_WhenNull_ShouldReturnMessage() {
         try {
@@ -43,6 +45,7 @@ public class MoodAnalyzerTest {
 
     }
 
+    //Handle Exception if User Provides Invalid Mood Like Empty
     @Test
     public void givenMood_WhenEmpty_ShouldReturnMessage() {
         try {
@@ -51,6 +54,32 @@ public class MoodAnalyzerTest {
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.ENTERED_EMPTY, e.type);
         }
+    }
 
+    //Use Reflection to Create MoodAnalyser with default Constructor
+    @Test
+    public void givenMoodAnalyzerDefault_WhenProper_ShouldReturnObject() {
+        MoodAnalyzer moodAnalyser = MoodAnalyseFactory.createMoodAnalyser();
+        Assert.assertEquals(new MoodAnalyzer(), moodAnalyser);
+    }
+
+    //Given Class Name When Improper Should Throw MoodAnalysisException
+    @Test
+    public void givenClassName_WhenImproper_ShouldReturnMoodAnalysisException() {
+        try {
+            MoodAnalyseFactory.getConstructor("com.moodAnalyzer.MooAnalyzer", int.class);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS, e.type);
+        }
+    }
+
+    //Given Class When Constructor Not Proper Should Throw MoodAnalysisException
+    @Test
+    public void givenClass_WhenConstructorNotProper_ShouldReturnMoodAnalysisException() {
+        try {
+            MoodAnalyseFactory.getConstructor("com.moodAnalyzer.MoodAnalyzer", int.class);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
+        }
     }
 }
