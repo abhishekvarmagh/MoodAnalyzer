@@ -1,8 +1,11 @@
 package com.moodAnalyzer;
 
 import com.CustomException.MoodAnalysisException;
+import com.sun.tools.javac.code.Attribute;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.lang.reflect.Method;
 
 public class MoodAnalyzerTest {
 
@@ -88,5 +91,24 @@ public class MoodAnalyzerTest {
     public void givenMoodAnalyzerClass_WhenProper_ShouldReturnObject() {
         MoodAnalyzer moodAnalyzer = MoodAnalyseFactory.createMoodAnalyser("I am in Happy Mood");
         Assert.assertEquals(new MoodAnalyzer("I am in Happy Mood"), moodAnalyzer);
+    }
+
+    //Given Happy Message Using Reflection When Proper Should Return HAPPY Mood
+    @Test
+    public void givenHappyMessage_WhenProper_ShouldReturnHappyMood() {
+        MoodAnalyzer moodAnalyzer = MoodAnalyseFactory.createMoodAnalyser("I am in Happy Mood");
+        String mood = MoodAnalyseFactory.invokeMethod(moodAnalyzer, "analyzeMood");
+        Assert.assertEquals("Happy", mood);
+    }
+
+    //Given Happy Message When Improper Method Should Throw MoodAnalysisException
+    @Test
+    public void givenHappyMessage_WhenImproperMethod_ShouldThrowMoodAnalysisException() {
+        try {
+            MoodAnalyzer moodAnalyzer = MoodAnalyseFactory.createMoodAnalyser("I am in Happy Mood");
+            MoodAnalyseFactory.invokeMethod(moodAnalyzer, "analyzeMod");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
+        }
     }
 }
