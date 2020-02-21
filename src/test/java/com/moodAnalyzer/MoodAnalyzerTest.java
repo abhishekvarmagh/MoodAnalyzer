@@ -82,4 +82,11 @@ public class MoodAnalyzerTest {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
         }
     }
+
+    //Use Reflection to Create MoodAnalyser with Parameter Constructor
+    @Test
+    public void givenMoodAnalyzerClass_WhenProper_ShouldReturnObject() {
+        MoodAnalyzer moodAnalyzer = MoodAnalyseFactory.createMoodAnalyser("I am in Happy Mood");
+        Assert.assertEquals(new MoodAnalyzer("I am in Happy Mood"), moodAnalyzer);
+    }
 }
