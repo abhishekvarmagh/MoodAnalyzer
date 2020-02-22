@@ -7,7 +7,7 @@ public class MoodAnalyzer {
     private String message;
 
     public MoodAnalyzer() {
-        message="Default Message";
+        message = "Default Message";
     }
 
     public MoodAnalyzer(String message) {
@@ -28,8 +28,8 @@ public class MoodAnalyzer {
         }
     }
 
-    public boolean equals(Object another){
-        if(this.message.equals(((MoodAnalyzer)another).message))
+    public boolean equals(Object another) {
+        if (this.message.equals(((MoodAnalyzer) another).message))
             return true;
         return false;
     }
